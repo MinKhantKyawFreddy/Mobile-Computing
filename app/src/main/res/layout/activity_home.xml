@@ -6,6 +6,45 @@
     android:layout_height="match_parent"
     android:padding="16dp">
 
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:queryHint="Search recipes..."
+        android:iconifiedByDefault="false"/>
+
+
+    <LinearLayout
+        android:id="@+id/filterLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:gravity="center_vertical">
+
+        <Button
+            android:id="@+id/btnVegan"
+            android:text="Vegan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"/>
+
+        <Button
+            android:id="@+id/btnVegetarian"
+            android:text="Vegetarian"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"/>
+
+        <Button
+            android:id="@+id/btnGlutenFree"
+            android:text="Gluten-Free"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+
+
     <!-- Add Recipe Button -->
     <Button
         android:id="@+id/btnAddRecipe"

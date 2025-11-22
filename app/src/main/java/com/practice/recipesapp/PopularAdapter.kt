@@ -23,18 +23,26 @@ class PopularAdapter(
 
     override fun getItemCount(): Int = dataList.size
 
+    fun updateList(newList: List<Recipe>) {
+        dataList.clear()
+        dataList.addAll(newList)
+        notifyDataSetChanged()
+    }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val recipe = dataList[position]
 
-        Glide.with(context).load(recipe.img).into(holder.binding.popularImg)
+        Glide.with(context)
+            .load(recipe.img)
+            .into(holder.binding.popularImg)
+
         holder.binding.popularTxt.text = recipe.tittle
 
-        val time = recipe.ing.split("\n".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-        holder.binding.popularTime.text = time.getOrNull(0) ?: ""
+        holder.binding.popularTime.text = recipe.ing.split("\n").getOrNull(0) ?: ""
 
         holder.itemView.setOnClickListener {
             val intent = Intent(context, RecipeActivity::class.java)
-            intent.putExtra("RECIPE_ID", recipe.uid) // Pass recipe ID
+            intent.putExtra("RECIPE_ID", recipe.uid)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             context.startActivity(intent)
         }
