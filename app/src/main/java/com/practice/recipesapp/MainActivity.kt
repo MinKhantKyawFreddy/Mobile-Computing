@@ -9,6 +9,8 @@ import android.os.Looper
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        DatabaseRepository.init(this)
+
         setContentView(R.layout.activity_main)
 
         Handler(Looper.getMainLooper())

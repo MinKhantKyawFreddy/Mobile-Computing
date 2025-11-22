@@ -1,53 +1,43 @@
 package com.practice.recipesapp
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.room.Room
 import com.practice.recipesapp.databinding.ActivityCategoryBinding
 
 class CategoryActivity : AppCompatActivity() {
 
-    private lateinit var rvAdapter: CategoryAdapter
-    private lateinit var dataList: ArrayList<Recipe>
-    private val binding by lazy {
-        ActivityCategoryBinding.inflate(layoutInflater)
-    }
+    private lateinit var binding: ActivityCategoryBinding
+    private lateinit var adapter: PopularAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityCategoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        title = intent.getStringExtra("TITTLE")
-        setupRecyclerView()
-        binding.goBackHome.setOnClickListener {
-            finish()
-        }
+        // Get category safely
+        val category = intent.getStringExtra("CATEGORY_NAME") ?: ""
 
+        // Set category title
+        binding.textViewCategoryTitle.text = category
+
+        // Setup back button
+        binding.backBtn.setOnClickListener { finish() }
+
+        // Setup RecyclerView with recipes
+        setupRecyclerView(category)
     }
 
-    private fun setupRecyclerView() {
+    private fun setupRecyclerView(category: String) {
+        val dao = DatabaseRepository.dao()
 
-        dataList = ArrayList()
-        binding.rvCategory.layoutManager =
-            LinearLayoutManager(this)
+        // Filter recipes by category safely
+        val recipes = dao.getAll()
+            .filterNotNull()
+            .filter { it.category.equals(category, ignoreCase = true) }
 
-        var db = Room.databaseBuilder(this@CategoryActivity, AppDatabase::class.java, "db_name")
-            .allowMainThreadQueries()
-            .fallbackToDestructiveMigration()
-            .createFromAsset("recipe.db")
-            .build()
-
-        var daoObject = db.getDao()
-        var recipes = daoObject.getAll()
-
-        for (i in recipes!!.indices) {
-            if (recipes[i]!!.category.contains(intent.getStringExtra("CATEGORY")!!)) {
-                dataList.add(recipes[i]!!)
-            }
-            rvAdapter = CategoryAdapter(dataList, this)
-            binding.rvCategory.adapter = rvAdapter
-        }
+        adapter = PopularAdapter(ArrayList(recipes), this)
+        binding.rvCategory.layoutManager = LinearLayoutManager(this)
+        binding.rvCategory.adapter = adapter
     }
-
 }

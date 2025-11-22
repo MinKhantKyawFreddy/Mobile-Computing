@@ -8,39 +8,35 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.practice.recipesapp.databinding.PopularRvItemBinding
 
-class PopularAdapter(var dataList: ArrayList<Recipe>, var context: Context) :
-    RecyclerView.Adapter<PopularAdapter.ViewHolder>() {
+class PopularAdapter(
+    private var dataList: ArrayList<Recipe>,
+    private val context: Context
+) : RecyclerView.Adapter<PopularAdapter.ViewHolder>() {
 
-    inner class ViewHolder(var binding: PopularRvItemBinding) :
+    inner class ViewHolder(val binding: PopularRvItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        var binding = PopularRvItemBinding.inflate(LayoutInflater.from(context), parent, false)
+        val binding = PopularRvItemBinding.inflate(LayoutInflater.from(context), parent, false)
         return ViewHolder(binding)
     }
 
-    override fun getItemCount(): Int {
-        return dataList.size
-    }
+    override fun getItemCount(): Int = dataList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Glide.with(context).load(dataList.get(position).img).into(holder.binding.popularImg)
+        val recipe = dataList[position]
 
-        holder.binding.popularTxt.text = dataList.get(position).tittle
+        Glide.with(context).load(recipe.img).into(holder.binding.popularImg)
+        holder.binding.popularTxt.text = recipe.tittle
 
-        var time = dataList[position].ing.split("\n".toRegex()).dropLastWhile { it.isEmpty() }
-            .toTypedArray()
+        val time = recipe.ing.split("\n".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        holder.binding.popularTime.text = time.getOrNull(0) ?: ""
 
-        holder.binding.popularTime.text = time.get(0)
         holder.itemView.setOnClickListener {
-            var intent = Intent(context, RecipeActivity::class.java)
-            intent.putExtra("img", dataList.get(position).img)
-            intent.putExtra("tittle", dataList.get(position).tittle)
-            intent.putExtra("des", dataList.get(position).des)
-            intent.putExtra("ing", dataList.get(position).ing)
+            val intent = Intent(context, RecipeActivity::class.java)
+            intent.putExtra("RECIPE_ID", recipe.uid) // Pass recipe ID
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             context.startActivity(intent)
         }
     }
-
 }

@@ -1,22 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".HomeActivity">
+    android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/card_back_btn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/menu_home" />
-
+    <!-- Top image/logo -->
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="190dp"
@@ -28,6 +18,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/home_assest1" />
 
+    <!-- Greeting Text -->
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
@@ -59,15 +50,16 @@
         android:layout_width="270dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_light"
-        android:text="Which indian food would you like to cook ?"
+        android:text="Which indian food would you like to cook?"
         android:textColor="#424242"
         android:textSize="17sp"
         app:layout_constraintStart_toStartOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
+    <!-- Search Bar -->
     <EditText
         android:id="@+id/search"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="55dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
@@ -96,9 +88,10 @@
         app:layout_constraintTop_toBottomOf="@+id/textView4"
         app:srcCompat="@drawable/search_ic" />
 
+    <!-- Categories label -->
     <TextView
         android:id="@+id/textView5"
-        android:layout_width="270dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="26dp"
         android:fontFamily="@font/poppins"
@@ -108,124 +101,143 @@
         app:layout_constraintStart_toStartOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/search" />
 
+    <!-- Horizontal Scroll for Categories -->
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:scrollbars="none"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="135dp"
-            android:orientation="vertical"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:gravity="center_vertical">
 
-            <ImageView
-                android:id="@+id/salad"
-                style="@style/my_Style"
-                android:background="@drawable/category_card_bc"
-                app:srcCompat="@drawable/category_salad" />
-
-            <TextView
-                android:id="@+id/textView6"
+            <!-- Salad Category -->
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/salad"
-                android:layout_alignStart="@id/salad"
-                android:layout_alignEnd="@id/salad"
-                android:layout_marginStart="17dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginEnd="19dp"
-                android:layout_marginBottom="-23dp"
-                android:fontFamily="@font/poppins_light"
+                android:orientation="vertical"
                 android:gravity="center"
-                android:text="Salad"
-                android:textColor="@color/black"
-                android:textSize="17sp" />
+                android:padding="8dp">
 
-            <ImageView
-                android:id="@+id/mainDish"
-                style="@style/my_Style"
-                android:layout_marginStart="17dp"
-                android:layout_toEndOf="@id/salad"
-                android:background="@drawable/category_card_bc"
-                app:srcCompat="@drawable/drinks" />
+                <ImageView
+                    android:id="@+id/salad"
+                    style="@style/my_Style"
+                    android:background="@drawable/category_card_bc"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    app:srcCompat="@drawable/category_salad" />
 
-            <TextView
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/poppins_light"
+                    android:gravity="center"
+                    android:text="Salad"
+                    android:textColor="@color/black"
+                    android:textSize="17sp" />
+            </LinearLayout>
+
+            <!-- Main Dish Category -->
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/mainDish"
-                android:layout_alignStart="@id/mainDish"
-                android:layout_alignEnd="@id/mainDish"
-                android:layout_marginStart="17dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginEnd="19dp"
-                android:layout_marginBottom="-23dp"
-                android:fontFamily="@font/poppins_light"
+                android:orientation="vertical"
                 android:gravity="center"
-                android:text="Main"
-                android:textColor="@color/black"
-                android:textSize="17sp" />
+                android:padding="8dp">
 
-            <ImageView
-                android:id="@+id/drinks"
-                style="@style/my_Style"
-                android:layout_marginStart="17dp"
-                android:layout_toEndOf="@id/mainDish"
-                android:background="@drawable/category_card_bc"
-                app:srcCompat="@drawable/catergory_drinks" />
+                <ImageView
+                    android:id="@+id/mainDish"
+                    style="@style/my_Style"
+                    android:background="@drawable/category_card_bc"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    app:srcCompat="@drawable/drinks" />
 
-            <TextView
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/poppins_light"
+                    android:gravity="center"
+                    android:text="Main"
+                    android:textColor="@color/black"
+                    android:textSize="17sp" />
+            </LinearLayout>
+
+            <!-- Drinks Category -->
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/drinks"
-                android:layout_alignStart="@id/drinks"
-                android:layout_alignEnd="@id/drinks"
-                android:layout_marginStart="17dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginEnd="19dp"
-                android:layout_marginBottom="-23dp"
-                android:fontFamily="@font/poppins_light"
+                android:orientation="vertical"
                 android:gravity="center"
-                android:text="Drinks"
-                android:textColor="@color/black"
-                android:textSize="17sp" />
+                android:padding="8dp">
 
-            <ImageView
-                android:id="@+id/desserts"
-                style="@style/my_Style"
-                android:layout_marginStart="17dp"
-                android:layout_toEndOf="@id/drinks"
-                android:background="@drawable/category_card_bc"
-                app:srcCompat="@drawable/category_dessert" />
+                <ImageView
+                    android:id="@+id/drinks"
+                    style="@style/my_Style"
+                    android:background="@drawable/category_card_bc"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    app:srcCompat="@drawable/catergory_drinks" />
 
-            <TextView
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/poppins_light"
+                    android:gravity="center"
+                    android:text="Drinks"
+                    android:textColor="@color/black"
+                    android:textSize="17sp" />
+            </LinearLayout>
+
+            <!-- Desserts Category -->
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/desserts"
-                android:layout_alignStart="@id/desserts"
-                android:layout_alignEnd="@id/desserts"
-                android:layout_marginStart="1dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="-23dp"
-                android:fontFamily="@font/poppins_light"
+                android:orientation="vertical"
                 android:gravity="center"
-                android:text="Desserts"
-                android:textColor="@color/black"
-                android:textSize="17sp" />
+                android:padding="8dp">
 
+                <ImageView
+                    android:id="@+id/desserts"
+                    style="@style/my_Style"
+                    android:background="@drawable/category_card_bc"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    app:srcCompat="@drawable/category_dessert" />
 
-        </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/poppins_light"
+                    android:gravity="center"
+                    android:text="Desserts"
+                    android:textColor="@color/black"
+                    android:textSize="17sp" />
+            </LinearLayout>
+
+        </LinearLayout>
     </HorizontalScrollView>
 
+    <!-- Popular Recipes Label -->
     <TextView
         android:id="@+id/textView9"
-        android:layout_width="270dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/poppins"
@@ -235,16 +247,30 @@
         app:layout_constraintStart_toStartOf="@+id/textView5"
         app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
 
+    <!-- Popular Recipes RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_popular"
-        android:layout_width="match_parent"
+        android:id="@+id/rvPopular"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView9"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         tools:listitem="@layout/popular_rv_item" />
 
+    <!-- Favorites button -->
+    <ImageView
+        android:id="@+id/btnFavorites"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        app:srcCompat="@drawable/ic_favorite_border"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
