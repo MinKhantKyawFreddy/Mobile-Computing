@@ -27,6 +27,7 @@
             android:name=".HomeActivity"
             android:exported="false" />
         <activity android:name=".FavoritesActivity" />
+        <activity android:name=".AddEditRecipeActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
