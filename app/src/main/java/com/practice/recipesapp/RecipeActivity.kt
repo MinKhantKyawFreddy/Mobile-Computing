@@ -5,6 +5,8 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
+import android.widget.Toast
+import android.content.Intent
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -26,29 +28,48 @@ class RecipeActivity : AppCompatActivity() {
         val recipe = dao.getById(recipeId)
 
         if (recipe == null) {
-            finish() // Close activity if recipe not found
+            Toast.makeText(this, "Recipe not found", Toast.LENGTH_SHORT).show()
+            finish()
             return
         }
 
-        // Load image and text
+        // Load image
         Glide.with(this).load(recipe.img).into(binding.itemImg)
+
+        // Set title
         binding.tittle.text = recipe.tittle
-        binding.stepData.text = recipe.des
+
+        // Set steps
+        binding.stepData.text = recipe.steps
 
         // Load ingredients
-        val ing = recipe.ing.split("\n".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-        binding.time.text = ing.getOrNull(0) ?: ""
+        val ingList = recipe.ing.split("\n")
+        binding.time.text = ingList.getOrNull(0) ?: ""
+        binding.ingData.text = ingList.drop(1).joinToString("\n") { "🟢 $it" }
 
-        for (i in 1 until ing.size) {
-            binding.ingData.text =
-                """${binding.ingData.text} 🟢 ${ing[i]}
+        // Share button
+        binding.btnShare.setOnClickListener {
+            val shareText = """
+                Check out this recipe: ${recipe.tittle}
 
-""".trimIndent()
+                Ingredients:
+                ${recipe.ing}
+
+                Steps:
+                ${recipe.steps}
+            """.trimIndent()
+
+            val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                type = "text/plain"
+                putExtra(Intent.EXTRA_TEXT, shareText)
+            }
+            startActivity(Intent.createChooser(shareIntent, "Share recipe via"))
         }
 
-        // Step / Ingredient toggle buttons
+        // Step / Ingredient toggle
         binding.step.background = null
         binding.step.setTextColor(getColor(R.color.black))
+
         binding.step.setOnClickListener {
             binding.step.setBackgroundResource(R.drawable.btn_ing)
             binding.step.setTextColor(getColor(R.color.white))
@@ -67,7 +88,7 @@ class RecipeActivity : AppCompatActivity() {
             binding.stepScroll.visibility = View.GONE
         }
 
-        // Fullscreen image toggle
+        // Fullscreen toggle
         binding.fullScreen.setOnClickListener {
             if (imgCrop) {
                 binding.itemImg.scaleType = ImageView.ScaleType.FIT_CENTER
@@ -87,7 +108,7 @@ class RecipeActivity : AppCompatActivity() {
         // Back button
         binding.backBtn.setOnClickListener { finish() }
 
-        // Favorite button logic
+        // Favorite button
         updateFavoriteUI(recipe.isFavorite)
         binding.favoriteBtn.setOnClickListener {
             val newFav = if (recipe.isFavorite == 1) 0 else 1
